@@ -8,3 +8,8 @@ namespace: default
 resources:
 - rbac.yaml
 - deployment.yaml
+
+configMapGenerator:
+- name: kube-downscaler
+  literals:
+    - DEFAULT_UPTIME="Mon-Fri 09:00-18:00 UTC"
