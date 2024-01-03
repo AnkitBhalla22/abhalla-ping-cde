@@ -19,6 +19,6 @@ helm template karpenter oci://public.ecr.aws/karpenter/karpenter --version ${KAR
     --set settings.aws.defaultInstanceProfile=KarpenterInstanceProfile \
     --version ${KARPENTER_VERSION} > karpenter.yaml
 
-wget -O karpenter.sh_provisioners.yaml https://raw.githubusercontent.com/aws/karpenter/${KARPENTER_VERSION}/pkg/apis/crds/karpenter.sh_provisioners.yaml
-wget -O karpenter.k8s.aws_awsnodetemplates.yaml https://raw.githubusercontent.com/aws/karpenter/${KARPENTER_VERSION}/pkg/apis/crds/karpenter.k8s.aws_awsnodetemplates.yaml
-wget -O karpenter.sh_machines.yaml https://raw.githubusercontent.com/aws/karpenter/${KARPENTER_VERSION}/pkg/apis/crds/karpenter.sh_machines.yaml
+wget -O karpenter.k8s.aws_ec2nodeclasses.yaml https://raw.githubusercontent.com/aws/karpenter-provider-aws/${KARPENTER_VERSION}/pkg/apis/crds/karpenter.k8s.aws_ec2nodeclasses.yaml
+wget -O karpenter.sh_nodeclaims.yaml https://raw.githubusercontent.com/aws/karpenter-provider-aws/${KARPENTER_VERSION}/pkg/apis/crds/karpenter.sh_nodeclaims.yaml
+wget -O karpenter.sh_nodepools.yaml https://raw.githubusercontent.com/aws/karpenter-provider-aws/${KARPENTER_VERSION}/pkg/apis/crds/karpenter.sh_nodepools.yaml
