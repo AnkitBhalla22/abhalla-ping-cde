@@ -15,7 +15,7 @@ else
     exit 1
 fi
 
-helm template karpenter oci://public.ecr.aws/karpenter/karpenter --version ${KARPENTER_VERSION} --namespace karpenter \
+helm template karpenter oci://public.ecr.aws/karpenter/karpenter --version ${KARPENTER_VERSION} --namespace kube-system \
     --set settings.aws.defaultInstanceProfile=KarpenterInstanceProfile \
     --version ${KARPENTER_VERSION} > karpenter.yaml
 
