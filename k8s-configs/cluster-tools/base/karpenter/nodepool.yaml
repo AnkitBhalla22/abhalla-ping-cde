@@ -127,6 +127,7 @@ spec:
         encrypted: true
   tags:
     KarpenerProvisionerName: "default"
+    Name: karpenter.sh/nodepool/fleet
     managed-by: "karpenter"
 ---
 apiVersion: karpenter.k8s.aws/v1beta1
@@ -149,6 +150,7 @@ spec:
         encrypted: true
   tags:
     KarpenerProvisionerName: "pd-only"
+    Name: karpenter.sh/nodepool/pd-only
     managed-by: "karpenter"
 ---
 apiVersion: karpenter.k8s.aws/v1beta1
@@ -171,4 +173,5 @@ spec:
         encrypted: true
   tags:
     KarpenerProvisionerName: "pgo-only"
+    Name: karpenter.sh/nodepool/pgo-only
     managed-by: "karpenter"
