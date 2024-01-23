@@ -6,3 +6,79 @@ kind: ConfigMap
 metadata:
   name: custom-environment-variables
   namespace: ping-cloud
+
+---
+# Enabling the deployment of pgo resources on a node provision by Karpenter
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgo
+  namespace: postgres-operator
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: pingidentity.com/pgo
+                operator: In
+                values:
+                - "true"
+      tolerations:
+        - key: pingidentity.com/pgo-only
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgo-upgrade
+  namespace: postgres-operator
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: pingidentity.com/pgo
+                operator: In
+                values:
+                - "true"
+      tolerations:
+        - key: pingidentity.com/pgo-only
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+
+---
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  labels:
+    app: ping-cloud
+  name: pf-provisioning
+  namespace: postgres-operator
+spec:
+  backups:
+    pgbackrest:
+      jobs:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: pingidentity.com/pgo
+                  operator: In
+                  values:
+                  - "true"
+        tolerations:
+        - effect: NoSchedule
+          key: pingidentity.com/pgo-only
+          operator: Equal
+          value: "true"
